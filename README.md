@@ -102,3 +102,129 @@ $ ls -ai
 <img src="./Recursos/Images/04.png" width="70%">
 
 ### [Tema 5. Sesión práctica con ficheros y directorios](https://www.youtube.com/watch?v=4zfr6j-guDs)
+
+## Módulo 2. La Interfaz De Usuario De UNIX
+
+> Este modulo introduce el interfaz de usuario, mas conocido como shell, del Sistema Operativo UNIX/Linux para los que no lo conocen. Además se describen los comandos mas importantes.
+> 
+> UNIX es probablemente el sistema operativo mas popular entre los desarrolladores de software. Además Git y GitHub, como muchas otras herramientas de Ingeniería de Software, se diseñaron para el interfaz de comandos textuales de UNIX y aunque existen interfaces gráficos, suele ser necesario acceder al interfaz textual para las operaciones mas complejas. 
+> 
+> Este curso incluye esta breve introiducción a UNIX/Linux, para que los que todavía no lo conocen puedan familiarizarse.
+
+### [Tema 1. La interfaz de usuario Unix I](https://www.youtube.com/watch?v=sWWCEX7f9qI)
+
+### [Tema 2. La interfaz de usuario Unix II](https://www.youtube.com/watch?v=vcHTpv5jb4k)
+
+**Entrada/salida de comandos**
+- Los argumentos de un comando suelen indicar la fuente de información de entrada (o el destino de los resultados de salida)
+- Además de los argumentos, un comando UNIX típico tiene definidos unos canales (ficheros) de entrada y salida por defecto:
+  - Entrada estándar (por defecto el teclado)
+  - Salida estándar (por defecto la pantalla)
+  - Salida estándar de errores (por defecto la pantalla)
+
+<img src="./Recursos/Images/05.png" width="50%">
+
+**Entradas de un comando**
+- Opciones y argumentos
+- Ficheros predefinidos
+  - Personalización de sesión (.login)
+  - Configuración del propio comando (.exrc para vi)
+- Variables de entorno
+  - TERM, PATH, PAGER, etc.
+- Entrada estándar
+
+**Salida de un comando**
+- Ficheros
+  - Nombre dado como argumento del comando
+  - Nombre por defecto
+- Salida estándar
+- Salida estándar de errores
+- Valor de retorno a la shell
+  - 0 (cero) es **ejecucción con éxito**.
+  - Cualquier otro valor entero es ejecución con errores.
+
+**Redirección de entrada/salida**
+- Los canales de entrada y salida estándar de un comando se asocian por defecto al terminal de usuario, pero pueden asociarse a cualquier otro fichero (redirección de entrada/salida).
+- La salida estándar de un comando puede asociarse con la entrada estándar de otro para conseguir la composición de comandos en cadena (pipeline).
+
+```bash
+# Redirigir salida estándar
+$ cal > calendario
+
+# Añadir salida a fichero preexistente
+$ cal >> calendario
+
+# Redirigir salida estándar a salida de error
+$ echo "Error" >&2
+
+# Redirigir entrada estándar 
+$ wx < poema
+
+# Entrada en la misma línea de comando (here document)
+$ wx << fin
+Texto que se ha de introducir
+Con múltiples líneas
+el cual añadirá al texto
+fin # Ctrl-D para finalizar
+
+# Secuencia de comandos
+$ date; who
+
+# Encadenamiento de comandos con un solo flujo de información (pipeline)
+$ grep -i amor ./poema | wc -l
+```
+
+<img src="./Recursos/Images/06.png" width="50%">
+<img src="./Recursos/Images/07.png" width="50%">
+<img src="./Recursos/Images/08.png" width="50%">
+
+### [Tema 3. La interfaz de usuario Unix III](https://www.youtube.com/watch?v=gr574VsZKBA)
+
+**Variables de la shell**
+- **Siempre** deben comenzar con una letra y les puede seguir otras letras, números o subrayado.
+- Asignar variables **sin espacios** entre el nombre, el igual, y el valor.
+
+```bash
+# Variable sin espacios
+$ nombre="Manu"
+$ echo $nombre
+$ echo "${nombre} Pérez"
+$ echo "${nombre}el Pérez"
+```
+
+**Tipos de variables**
+- **Ordinaria**: locales de propósito general.
+- **De entorno**: describen el contexto de ejecución y se heredan. (TERM, PATH, HOSTNAME, USER, etc.)
+- **Especiales de la shell (posicionales)**: configuran el entorno de la propia shell. 
+  - <comando> <arg1> <arg2> ...=> $0 $1 $2
+
+```bash
+$ cc -o programa parte1.c parte2.c
+$0 # cc
+$1 # -o
+$2 # programa
+$3 # parte1.c
+$4 # parte2.c
+```
+
+<img src="./Recursos/Images/09.png" width="50%">
+
+**Inicialización de la shell**
+- Inicialización de la sesión para un único usuario: **$HOME/.profile**
+- Inicialización de la sesión común para todos: **/etc/profile**
+
+**Tipos de shell**
+- Interactiva: permiten interactuar al usuario con el sistema operativo.
+  - **Login shell**: la que se inicia tras el proceso de login.
+  - **Non-login shell**: una shell ejecutada como comando desde otra shell. Hereda el entorno y ejecuta ficheros de inicialización específicos. La shell de una ventana de terminal en Ubuntu es una **non-login shell**
+- **No interactiva**: entorno de ejecución de un comando lanzado por una shell interactiva, de la que hereda el entorno.
+
+**Ficheros para particularización de comienzo y fin de sesión**
+- **/etc/profile**: inicialización global para login shell.
+- **/etc/basrc**: configuración global.
+- **$HOME/.bash_profile**: ejecutada al comienzo de sesión.
+- **$HOME/.bashrc**: ejecutada al comienzo de una shell.
+- **$HOME/.bash_logout**: ejecutada al realizar un  logout.
+
+### [Tema 4. Sesión práctica sobre interfaz de usuario Unix I](https://www.youtube.com/watch?v=ZfjnfqaXySc)
+### [Tema 5. Sesión práctica sobre interfaz de usuario Unix II](https://www.youtube.com/watch?v=PajiFDGZ-Xk)
