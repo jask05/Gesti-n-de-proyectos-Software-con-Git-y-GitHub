@@ -429,9 +429,175 @@ $ git checkout .
 ```
 
 ### [Tema 3. Repositorios públicos y remotos en GitHub](https://www.youtube.com/watch?v=RTduhSDILhs)
-### [Tema 4. Transparencias. Resumen de Git y de sus principales comandos]()
-### [Tema 4. Resumen de Git y de sus principales comandos]()
-### [Tema 5. VS Code - Clonar proyecto y añadir Commit]()
+
+**Tipos de repositorios**
+- Repositorio local o de trabajo (con directorio de trabajo)
+  - Repositorio para desarrollar en el ordenador local.
+- Repositorio bare (sin directorio de trabajo)
+  - Se suelen alojar en servidores remotos en Internet.
+  - Se utilizan para compartir desarrollos, guardar backups, etc.
+  - Se crean con **git init --bare**.
+
+**Remote**
+- Los repositorios remotos se identifican con URL.
+- **Remote**: nombre corto, dado en un repositorio local a uno remoto.
+  - **Origin**: repositorio origen de clonación con *git clone*.
+    - La rama **master** (rama desde dónde se está trabajando en local, en el ordenador) de origin pueden referenciarse como **origin/master**.
+    - **Cal**: repositorio que contiene una calculadora guardada en GitHub.
+    - **Heroku**: repositorio para despliegue en Heroku.
+  - Un repositorio *remote* se define con el comando **git remote**.
+    - **git remote [-v]**: muestra los repositorios remotos definidos en un repositorio local (**-v** modo *verbose*)
+    - **git remoge add call \<url>**: define *remote* **cal** asociado a la URL.
+    - **git remote remove cal**: borra el *remote* **cal** del repositorio local (**cal** ya no podrá se utilizado en comandos.)
+
+**Sincronización de repositorios**
+- Git está pensado para trabajar en equipo y permite sincronizar repositorios locales y remotos con facilidad.
+- **git clone \<url>**: clona en local un repositorio remoto, que pasa a denominarse **origin**.
+- **git push [origin master]**: sube a origin commits nuevos de master (si son compatibles).
+- **git pull**: trae desde origin commits nuevos de master (si son compatibles).
+  - Los nuevos coomits habrán sido generados por otros con acceso al repositorio.
+- Solo está permitido hacer *push* en repositorios *bare* (en locales no).
+
+**GitHub**
+- Servicio en la nube para albergar proyectos Git en repositorios remotos.
+  - Permite acceder a los proyectos con Git o con un navegador.
+  - Su lema es: *Social coding* porque tiene estructura de red social.
+- Repositorios públicos **gratis**, los privados (ahora) también, pero con limitaciones.
+- GitHub permite identificar sus repositorios con 3 tipos de URL:
+  - https://github.com/jquemada/cal
+  - https://github.com/jquemada/cal.git
+  - git@github.com/jquemada/cal.git
+- Alternativas: BitBucket, GitLab, etc.
+
+**Funciones principales de GitHub**
+- Crear repositorio (remoto) nuevo y vacío para albergar un proyecto.
+- Copiar un repositorio albergado en GitHub a otra cuenta. **Fork**.
+- Importar un repositorio identificado por su URL a GitHub, incluso en otro formato. (**Import repository**)
+- Crear una organización para albertar múltiples proyectos relacionados (**New Organization**).
+
+**Actualizar un repositorio en GitHub con push**
+- **git push**: actualiza el repositorio remoto con los nuevos commits de una rama local.
+  - **git push**: actualiza commits nuevos de rama local master (por defecto) en repositorio origin (por defecto)
+  - **git push origin master**: actualiza commits nuevos de rama local **master** en repositorio **origin** (similar al anterior).
+  - **git push \<url> \<nombre>**: actualiza los nuevos commits de la rama local **\<nombre>** en el repositorio GitHub **\<url>**.
+- **Git push** necesita 2 condiciones para finalizar con éxito:
+  - Se debe tener credenciales de acceso al repositorio remoto.
+  - La actualización de commits debe ser comptaible con la rama actualizada en el remoto.
+    - Solo deben **añadir nuevos commits al final de la rama remota** o actualizar un **repositorio vacío**.
+      - **¡Atención!**. La opción **-f** permite actualizar una rama incompatible, pero **se pierden commits**.
+
+### [Tema 4. Resumen de Git y de sus principales comandos](https://www.youtube.com/watch?v=pvgzdHPVTSU)
+
+- Revisar PDF [aquí](./Recursos/Módulo03/git_MOOC_resumen_Git.pdf)
+### [Tema 5. VS Code - Clonar proyecto y añadir Commit](https://www.youtube.com/watch?v=VIozr2RGXl0)
+
+### [Ejercicio P2P obligatorio](https://github.com/ging-moocs/MOOC_git_mod3-commit_entrega/blob/master/README.md)
+
+## Módulo 4. Ramas, grafo de commits e integración de ramas con merge
+
+>Este módulo introduce los conceptos de rama y grafo de commits de Git donde se guardan las versiones de un proyecto software, que se van guardando para uso futuro.
+>
+>Ilustra como deben utilizarse las ramas para gestionar desarrollos, de forma que el desarrollo de cada nueva funcionalidad puede seguirse a través de las ramas y del grafo de commits.
+>
+>También se describen los comandos Git mas importantes para la gestión de ramas y del grafo de commits, incluyendo la integración de ramas con git merge. git merge permite integrar dos desarrollos realizados en ramas diferentes en una de las ramas con facilidad. Así se pueden integrar nuevas funcionalidades en la rama principal o en otras ramas de un proyecto.
+>
+>Se contiua viendo nuevas posibilidades de de Visual Studio Code para inspeccionar y gestionar repositorios Git.
+
+[Tema 1. Ramas y grafo de commits: branch, checkout, diff, log, reset y show](https://www.youtube.com/watch?v=CtrwAtEH0Ns)
+
+**Ramas**
+- **Rama master** es la rama principal de un repositorio.
+  - Rama predefinida que se crea con el primer commit.
+- Las ramas soportan desarrollos separados del master.
+  - Una rama puede comenzar en cualquier commit del repositorio.
+    - Los nuevos commits de una rama se deben añadir al final (la rama siempre crece)
+  - Una flecha indica el commit o los commits anteriores en el desarrollo.
+- **git branch**
+  - **git branch rama_y 46g8g8 crea** la rama_y con base en C3 (46g8g8)
+  - **git branch -v** muestra las ramas existentes.
+- Una rama es como un puntero a su último commit
+  - **master** asociada al commit 5558t8
+  - **rama_x** asociada al commit abc123
+
+<img src="./Recursos/Images/10.png" width="60%">
+
+**Grafo de commits**
+- Grafo con la relación de generación de todos los commits de un repositorio.
+- Las fechas de salida de un commit indican su relación con los anteriores.
+  - **Una flecha**: commit **generado por modificación** del commit anterior.
+  - **Dos flechas**: commit **generado por integración** de una rama o commit con otro.
+- Historia de un commit
+  - Secuencia ordenada (por fechas) de commits utilizados para generar dicho commit.
+- Padres y ancestros de un commit
+  - **\<commit>^n**: representa el número (**n**) de **adre** de un commit de integración.
+    - Por ejemplo: **master^1=g699g8** o **master^2=ah78j9**.
+  - **\<commit>~n**: **ancestro n** de su historia.
+    - Por ejemplo: **46g8g8~1=dd12f9** o **master~2=46g8g8**.
+
+**Referencia a commits del grafo repo**
+- Las formas más habituales de identificar los commits del grafo son:
+  - **HEAD**: puntero/referencia al commit actual en el directorio de trabajo.
+  - **Rama**: puntero al último commit de una rama de desarrollo.
+    - **Rama local**: rama copiada en el repositorio local (**master, sqrt, etc.**)
+    - **Rama remota**: rama de un repositorio remote (**origin/master, origin/sqrt, remote/origin/sqrt...**)
+  - **Identificador** corto o largo: identificador único de un commit (**d154fc4, 973751d2,...**)
+  - **Ancestro: commit~n** sigue la línea del primer padre.
+    - Por ejemplo: master~2, sqrt~1, ...
+  - **Padre: commit^n** El primer **padre** (**c^1**) es también el primer ancestro (**c~1**)
+  - **Tag o etiqueta: v1.0, v0.2...** se añaden con **git tag -a v1.0**
+
+<img src="./Recursos/Images/11.png" width="70%">
+
+**Comandos log, diff y show**
+- **git log**: muestra la historia
+  - **git log -3** : muestra los últimos 3 commits de la historia del commit actual (HEAD)
+  - **--oneline --graph rama_x**: muestra el grafo de integración de commits de **rama_x** (formato 1 línea)
+  - **git log --oneline master~2**: historia del segundo ancestro de **master** (formato 1 línea)
+  - **git log --oneline --all --graph**: muestra el **grafo completo** de commits del repositorio.
+  - **git log --oneline --all -8**: muestra los **8 últimos commits de todo el repositorio** ordenados por fechas.
+  - **git log --follow file1 -20**: muestra historia de cambios del fichero **file1** (commits donde file1 ha cambiado)
+- **git diff**: muestra diferencias de código entre commits, wd..
+  - **git diff rama_x master**: muestra los cambios en ficheros entre **rama_x** y **master**.
+  - **git diff master~2**: muestra los cambios en ficheros entre **master~2** y **HEAD**.
+  - **git diff rama_x master --LICENSE**: muestra los cambios en el fichero LICENSE entre **rama_x** y **master**.
+  - **git diff rama_x master LICENSE** similar al anterior si no hay ambigüedad en los nombres.
+- **git show**: muestra elementos de un commit.
+  - **git show rama_x**: muestra metadatos del último commit de rama_x y las diferencias con commit anterior.
+  - **git show** muestra metadatos de HEAD y las diferencias con commit anterior.
+  - **git show HEAD~2:package.json**: muestra el código del fichero *package.json* del commit HEAD~2.
+
+**Restaura commits en el directorio de trabajo**
+- **git checkout \<rama> (o \<commit>)** restaurante *rama* en el **directorio de trabajo**.
+  - El directorio de trabajo debe estar **limpio** (sin cambios respecto al commit anterior)
+    - **¡OJO!**. La opción **-f** restaura aunque existan cambios en el directorio de trabajo, que se **perderán**.
+    - Ejemplos:
+      - **git checkout rama_x**: restaura **rama_x** (abc123) en el directorio de trabajo y actualiza **HEAD**.
+      - **git checkout master**: restaura la rama master (5558t8) en el directorio de trabajo y actualiza **HEAD**.
+      - **git checkout dd12f9~2**: restaura el segundo ancestro de 5558t8 en el directorio de trabajo y actualiza **HEAD**.
+- **HEAD** es un puntero al commit que está restaurado en el directorio de trabajo.
+  - **HEAD** se actualiza automáticamente al ahcer el *checkout*.
+
+**Comando reset**
+- **git reset \<commit>**: cambia el puntero de rama **HEAD** a **\<commit>**. Deja las diferencias entre **HEAD** y **\<commit>** en el directorio de trabajo. Es decir, restaura el contenido de commit, añadiendo las diferencias con **\<commit>**
+- Ejemplo de uso
+  - **git reset master~2**: mueve **HEAD** y el puntero de rama al segundo ancestro, dejando las diferencias en el directorio de trabajo.
+    - **Nota**: los cambios introducidos en los dos commits que desaparecen de la rama quedan en los ficheros *modified*.
+  - **git reset --hard \<commit>**
+    - Cambia el puntero de rama y **HEAD** a **\<commit>**.
+      - **Muy peligroso!**. Los commits y su código se pueden perder, si los eliminados no están guardados en otra rama.
+    - Ejemplo de uso
+      - **git reset --hard master~2**: mueve **HEAD** y el puntero de rama al segundo ancestro.
+        - Los dos últimos commits de la rama desaparecerían si no estuviesen en otra.
+  - El comando **git reset** permite compactar o eliminar commits del grafo.
+    - Normalmente se utiliza para eliminar, compactar o rehacer la última parte de la historia de una rama.
+      - Por ejemplo, si **HEAD** estuviera en master, **git reset --hard master~1** eliminaría el commit C8 (5558t8)
+        - Como los cambios han quedado en el directorio de trabajo, estos se pueden integrar en un commit solo de master.
+
+<img src="./Recursos/Images/12.png" width="80%">
+
+[Tema 1b. VS Code -- Árbol de Commits con Git Graph]()
+[Tema 2. Integración de ramas: merge, commit y checkout y fast-forward]()
+[Tema 3. VS Code - Git Merge]()
 
 # Bibliografía
 
