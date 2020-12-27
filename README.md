@@ -503,7 +503,7 @@ $ git checkout .
 >
 >Se contiua viendo nuevas posibilidades de de Visual Studio Code para inspeccionar y gestionar repositorios Git.
 
-[Tema 1. Ramas y grafo de commits: branch, checkout, diff, log, reset y show](https://www.youtube.com/watch?v=CtrwAtEH0Ns)
+### [Tema 1. Ramas y grafo de commits: branch, checkout, diff, log, reset y show](https://www.youtube.com/watch?v=CtrwAtEH0Ns)
 
 **Ramas**
 - **Rama master** es la rama principal de un repositorio.
@@ -595,10 +595,55 @@ $ git checkout .
 
 <img src="./Recursos/Images/12.png" width="80%">
 
-[Tema 1b. VS Code -- Árbol de Commits con Git Graph]()
-[Tema 2. Integración de ramas: merge, commit y checkout y fast-forward]()
-[Tema 3. VS Code - Git Merge]()
+### [Tema 1b. VS Code -- Árbol de Commits con Git Graph](https://www.youtube.com/watch?v=DXRVGFNbp48)
+
+- Plugin: Git Blame
+
+### [Tema 2. Integración de ramas: merge, commit y checkout y fast-forward](https://www.youtube.com/watch?v=qwJjjG8rfsY)
+
+**Integración de ramas con merge**
+- La figura ilustra integración de la rama **master** en la rama **cal_merge** (inverse)
+  - La integración se realiza con **git merge master** estando en la rama **cal_merge**.
+    - La integración es un proceso que puede tener conflictos que la interrumpen y hay que resolver.
+  - Una integración genera un **commit de ingración** con **dos padres**, uno en cada rama.
+    - El commit de integración es una nueva calculadora con los dos botones integrados. 
+
+**Integración de commits: git merge**
+- **git merce -m "mensaje" \<branc>**
+  - Integra **\<branch>** en **HEAD** e inluye el **"mensaje"** como descripción del commit de integración.
+- Git utiliza estrategias de integración complejas en función de los ancestros comunes, integrando fichero a fichero:
+  - Ficheros iguales en ambos commits: incluye el fichero común (**sin** conflicto)
+  - Fichero esta solo en uno de los commits: incluye el fichero (**sin** conflicto)
+  - Ficheros con diferencias en contextos disjuntos: integra ambos ficheros (**sin** conflicto)
+  - Ficheros con diferencias en el mismo contexto: unse ambos ficheros y **genera conflicto**.
+- Si no hay conflictos, se **genera un nuevo commit de integración** de tipo **auto-merge**.
+  - Además, se debe comprobar que el software resultante funciona bien.
+- Si **hay conflicto**, se **aborta** la integración y se generan los **conflictos**.
+  - Los **conflictos deben resolverse** (con el editor y los cambios **registrase en el índice**)
+    - La integración debe completarse entonces con **git merce --continue** o con **git commit...**.
+  - **git merge --abort** deshace la integración y vuelve al estado anterior a invocar merge.
+
+**Conflictos: estado de los ficheros**
+- Si hay conflictos no se genera el commit de integración.
+  - **Ficheros sin conflictos**: quedan en estado **staged**.
+  - **Ficheros con conflictos**: quedan en estado **unmerged**.
+    - Los conflictos quedan **marcados** en el código y deben resolverse con el editor.
+  - Una vez resueltos los conflictos, deben registrarse en el índice y cerrar el merge.
+    - El merge debe cerrarse con **git merge --continue** (o con **git commit...**)
+
+**Integración ff (fast-forward)**
+- **git merge** detecta si la integración pedida se ha realizado ya en otra rama.
+  - Si es así, Git está configurado para realizar una integración ff (Fast-Forward)
+    - Simplemente avanzará el puntero de rama hasta el commit que contiene la integración solicitada.
+    - No se generará nuevo commit, se reutiliza el existente.
+- Al integrar la rama **cal_merge** en la rama master se reutiliza con **fast-forward** la integración realizada en la rama **cal_merge**.
+  - Porque master se ha integrado ya en **cal_merge**, tal y como muestra el grafo de commits.
+
+### [Tema 3. VS Code - Git Merge](https://www.youtube.com/watch?v=-imrBuWWOoI)
+
+### [Ejercicio P2P obligatorio](https://github.com/ging-moocs/MOOC_git_mod4-merge_entrega/blob/master/README.md)
 
 # Bibliografía
 
 - https://git-scm.com/book/es/v2
+- https://www.campusmvp.es/recursos/post/git-los-conceptos-de-master-origin-y-head.aspx
