@@ -643,7 +643,120 @@ $ git checkout .
 
 ### [Ejercicio P2P obligatorio](https://github.com/ging-moocs/MOOC_git_mod4-merge_entrega/blob/master/README.md)
 
+## Módulo 5. Módulo 5. Integrar Ramas Con Rebase, .Gitignore, Remote, Arrancar Proyectos
+
+>Este módulo introduce el concepto de cambio de base de una rama, conocido como rebase, Un rebase permite realizar bucles de integraciones completas con relativa facilidad y se utiliza para limpiar el arbol de trabajo, dejando un desarrollo lineal. Permite también quitar commits intermedios y realizar otras operaciones de limpieza del grafo de commits.
+>
+>También se describen los comandos Git mas importantes para la realización >de un rebase, incluyendo la opción interactiva.
+>
+>Además se muestran nuevas posibilidades de GitHub.
+>
+>Se contiua viendo nuevas posibilidades de de Visual Studio Code para realizar un rebase, combinando con comandos textuales.
+
+### [Tema 1. Integración de ramas con rebase](https://www.youtube.com/watch?v=_99N-QulgMA)
+
+**Cambiar la base de una rama**
+- Una rama se usa para hacer desarrollos separados de la rama master.
+  - Cambiar la base de una rama permite también integrar desarrollos.
+- Cambiar de base (**rebase**) integra desarrollos linealmente y es muy limpio.
+  - Elimina la historia de ramas utilizadas e integradas para el desarrollo.
+
+<img src="./Recursos/Images/14.png" width="80%">
+
+**Cambiar la base de la rama *cal_rebase***
+- **git rebase square**
+  - Arranca un bucle que **cambia la base** de la rama **cal_rebase** (HEAD) a **square**.
+    - Como el rebase solo tiene que integrar un commit, aquí solo habrá una iteración al bucle.
+  - El bucle integra el commit "**1/x button**" en "**x^2 button**" para su nueva base.
+    - Si hay conflictos, se aborta el proceso, marcando los conflictos, que deben resolverse con el editor.
+    - Una vez registrados los cambios a integrar en el índice, se continúa con **git rebase --continue**
+  - Al finalizar el bucle la rama ha cambiado la base "**Read. & Lic**" por "**x^2 button**"
+- **git rebase -i ...** permite modificación interactiva de la rama.
+
+<img src="./Recursos/Images/15.png" width="80%">
+
+**Actualizar un repositorio en GitHub con push**
+- **git push ...**
+  - Actualiza el repositorio remoto con los nuevos commits de una rama local.
+    - **git push --all \<url>**
+      - Actualiza los nuevos comits de la rama master en el repositorio GitHub especificado.
+- **git push ...** necesita 2 condiciones para finalizar con éxito:
+  - Se debe tener credenciales de acceso al repositorio remoto.
+  - La actualización de commits debe ser compatible con la rama actualizada en el remoto.
+    - Solo debe **añadir nuevos commits al final de la rama remota** o actualizar un **repositorio vacío**.
+      - **Peligro!**: la opción **-f** permite actualizar una rama incompatible, pero se pierden commits.
+
+<img src="./Recursos/Images/16.png" width="80%">
+
+### [Tema 1b. VS Code - Git Rebase](https://www.youtube.com/watch?v=K8cvZDWLAYM&)
+
+### [Tema 2. Crear commit inicial en GitHub, clonar y actualizar: new_repository, .gitignore](https://www.youtube.com/watch?v=KBYBYNiVLHc)
+
+**.gitignore**
+- Fichero que informa a Git de los ficheros que no debe gestionar.
+- Se crea en el directorio o sub-directorio de trabajo y afecta a todo el árbol asociado.
+- Contenido: líneas con patrones de nombres
+  - Pueden usarse los comodines **\*** y **?**
+  - Patrones terminados en **/** indican directorios.
+  - Un patrón que empiece por **!** indica negación.
+  - Se ignoran líneas en blanco y que comiencen con **#**
+  - **[abc]** indica cualquiera de los caracteres entre corchetes.
+  - **[a-z]** indica cualquier carácter ASCII (desde a hasta z)
+  - **Ejemplo**
+    - private.txt > excluir los ficheros con nombre private.txt
+    - *.class > excluir los ficheros acabados en .class
+    - *.[oa] > excluir ficheros acabados en .o y .a
+    - !lib.a > no excluir el fichero lib.a
+    - *~ > excluir ficheros acabados en ~
+    - testing/ > excluir el directorio testing
+```bash
+# Lista todos los ficheros de este proyecto ignorados en Git
+$ git ls-file --other --ignored --exclude-standar
+```
+
+**Referenciar un repositorio remoto**
+- **git remote ...** permite asociar un nombre, denominado **remote**, a una URL.
+  - El nuevo nombre puede utilizarse, en vez de URL, en los comandos para identificar el repositorio.
+  - **git remove -v**
+    - Muestra los repositorios remotos definidos en un repositorio.
+  - **git remote add ...**
+    - Define un nuevo remote en el repositorio asociado a una URL.
+  - **git remote remove ...**
+    - Borra la definición de un remote en el repositoio.
+```bash
+# Asocia el nombre "cal_2com" con la URL en cuestión
+$ git remote add cal_2com https://github.com/jquemada/cal_2com
+
+# Borra el nombre cal_2com del repositorio y ya no podrá ser utilizado en comandos
+$ git remove remove cal_2com
+```
+
+**Clonar un repositorio remoto**
+- Un proyecto publicado en un servidor en Internet
+- **git clone...**
+  - Crea un nuevo repositorio local, donde copia **la rama master** del repositorio remoto.
+    - Asocia el nombre de remote **origin** al repositorio remoto origen de la clonación.
+
+```bash
+$ git clone <url>
+$ git clone <url> nuevo_nombre
+```
+
+**Actualizar rama master remota**
+
+```bash
+# Sube la rama master del repositorio local a origin
+# -q: quiet mode
+$ git push [ -q ] origin master
+```
+
+### [Ejercicio P2P obligatorio](https://github.com/ging-moocs/MOOC_git_mod5-rebase1_entrega/blob/master/README.md)
+
+---
+
 # Bibliografía
 
 - https://git-scm.com/book/es/v2
 - https://www.campusmvp.es/recursos/post/git-los-conceptos-de-master-origin-y-head.aspx
+- https://www.atlassian.com/es/git/tutorials/rewriting-history
+- ⭐ [Git Rebase](https://www.solucionex.com/blog/git-merge-o-git-rebase)
