@@ -752,6 +752,56 @@ $ git push [ -q ] origin master
 
 ### [Ejercicio P2P obligatorio](https://github.com/ging-moocs/MOOC_git_mod5-rebase1_entrega/blob/master/README.md)
 
+## Modulo 6: Colaborar Utilizando GitHub
+
+>Este módulo describe como crear repositorios de referencia que permitan colaborar a un equipo de programadores que desarrollan un programa conjuntamente. 
+>
+>Se introduce el uso de GitHub para realizar copias de repositorios de referencia (forks) de proyectos, donde los miembros de equipos de desarrolladores software guardan sus desarrollos particulares a lo largo de la vida de un proyecto.
+>
+>Se describen con mayor detalle los conceptos y comandos de Git relacionados con el acceso a ramas en repositorios remotos que contienen los desarrollos de otros programadores o la rama principal del proyecto. 
+
+### [Tema 1. Clonar con Fork en GitHub: Fork, clone y push](https://www.youtube.com/watch?v=jvyilNupRAM)
+
+### [Tema 2. Ramas locales, remotas, tracking y refspecs: branch, checkout](https://www.youtube.com/watch?v=y80pSEvTkSk)
+
+**Rama local, remota y tracking**
+- **Rama local**: rama donde se realiza el desarrollo de nuevos commits.
+  - Las ramas locales almacenan sus commits en el repositorio de commits en el directorio .git
+- **Rama remota**: rama de un **remote** definido en el repositorio local.
+  - Son copias de las ramas del remote mostradas en el grafo de commits del repositorio local.
+    - Su estado se actualiza en las operaciones de sincronización: **clone, fetch, pull o push**.
+    - **remote**: nombre simbólico asociado al URL de un repositorio definido con **git remote**.
+- **Nombre de rama remota**: va precedido por **\<remote>** o por **remotes/\<remote>**
+  - origin/master o remotes/rogin/master > identifica la rama master del remote origin.
+  - cal/square o remotes/cal/square > identifica la rama square del remote cal.
+- **Rama tracking**: rama local asociada a una remota.
+  - La rama tracking simplifica las operaciones de sincronización con la remota.
+    - Una rama de desarrollo local suele ser tracking de la remota equivalente, por ej. **master** de **origin/master**.
+
+**Copiar una rama remota en una local**
+- Para añadir desarollos a una rama remota debemos copiarla en una local.
+  - Los desarrollos se realizan sobre la rama local añadiendo nuevos commits.
+- **git checkout**
+  - Copia una rama remota en una local tracking y restaura la rama local (solo cuando no existe)
+    - **git checkout square**: crea y restaura la rama tracking square asociada a **\<remote>/square**.
+  - Restaura una rama remota en mode detached **HEAD**, es decir no asociada a ninguna rama.
+    - **git checkout origin/square** restaura **origin/square** en modo detached HEAD.
+- **git fech**
+  - Copia una rama remota en una local utilizando refspecs: **[+]<local_branc>:<remote_branch>**
+    - **git fetch origin square:sqrt**
+      - Crea o actualiza la rama local sqrt con los commits de la remota **origin/square**.
+    - **git fetch origin pull/1/head:s1**
+      - Crea o actualiza la rama local **s1** con el pull_request 1 del repositorio remoto origin en GitHub.
+    - **git fetch cal_branches +s1:s1**
+      - Crea o actualiza la rama local s1 con la remota cal_branches/s1 aunque sean incompatibles (+)
+    - **git fetch <url> square:square**
+      - Crea o actualiza la rama local square con la remota square de <url>
+- **git pull**
+  - Trae la rama remota indicada e integrarla con una rama del repositorio local.
+    - git pull cal_branches square > integra la rama square de cal_brances en la rama activa.
+    - git pull origin pull/1/head > integra el pull_request #1 en la rama activa.
+    - 
+
 ---
 
 # Bibliografía
@@ -760,3 +810,4 @@ $ git push [ -q ] origin master
 - https://www.campusmvp.es/recursos/post/git-los-conceptos-de-master-origin-y-head.aspx
 - https://www.atlassian.com/es/git/tutorials/rewriting-history
 - ⭐ [Git Rebase](https://www.solucionex.com/blog/git-merge-o-git-rebase)
+- [Si alguna vez se equivoca uno al rehacer una rama, se puede utilizar el reflog para arreglarlo](https://git-scm.com/docs/git-reflog)
