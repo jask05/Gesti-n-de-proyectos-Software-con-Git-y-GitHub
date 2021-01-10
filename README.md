@@ -802,6 +802,35 @@ $ git push [ -q ] origin master
     - git pull origin pull/1/head > integra el pull_request #1 en la rama activa.
     - 
 
+### [Ejercicio P2P obligatorio](https://github.com/ging-moocs/MOOC_git_mod6-rebase2_entrega/blob/master/README.md)
+
+## Módulo 7. Contribuir A Un Repositorio De Terceros Con Pull-Request
+
+>Este módulo describe como trabajar en equipo y contribuir a repositorios de referencia desde los repositorios de trabajo (forks) de los miembros de un equipo que desarrollan un programa conjuntamente.
+>
+>Un equipo suele tener un repositorio de referencia y cada desarrollador del equipo suele crearse un repositorio remoto de trabajo, haciendo una copia directamente en GitHub utilizando la funcionalidad Fork. Cada desarrollador guarda sus versiones en su repositorio de trabajo (Fork) en GitHub y cuando estan bien probadas y listas se envia la rama que contiene la nueva funcionalidad con un pull request para que sea integrada en el repositorio de referencia por el resposable de la integración.
+>
+>Se introduce el uso pull requests al repositorio de referencia en GitHub como forma de contribuir nuevas funcionalidades, para que esten a disposición del equipo y pedan ser integradas en el repositorio de referencia.
+
+### [Tema 1. Contribuir a un repositorio central con pull request](https://www.youtube.com/watch?v=EEg7nZxkXM0)
+
+**Repositorio central**
+- Publica las versiones maduras y probadas de un proyecto, permitiendo descargarlas.
+- Los admins del proyecto aalizan las contribuciones (**pull_requests**) y las integran si consideran que enriquecen el proyecto.
+
+**Actualizar ramas remotas**
+- **git push...** sube los cambios en las ramas locales a los repositorios remotos.
+  - Las ramas locales sobre las que se trabaja son normalmente ramas tracking de las remotas.
+  - Copia una rama rocal en una remota y puede utilizar *refspecs*: [+]<local_branc>:<remote_branch>
+  - **git push**: actualiza las ramas remotas de las ramas locales **tracking** definidas en el repositorio local.
+  - **git push -f cal_branches mastes** actualiza la rama **cal_brances/mastes** con la local **master**, aunque sean incompatibles.
+  - **git push cal_branches sqrt:square** actualiza la rama remota **cal_brances/square** con los nuevos commits de la local **sqrt**
+  - **git push <url> sqrt:square** actualiza la rama remota **cal/square** con los nuevos commits de la local **sqrt**.
+  - **git push origin :sqrt** borra la rama **sqrt** en el repositorio remoto **origin**.
+  - **git push origin --delete sqrt** similar al anterior, opción posible en versiones recientes de git.
+
+### [Ejercicio P2P obligatorio](https://github.com/ging-moocs/MOOC_git_mod7-pr_entrega/blob/master/README.md )
+
 ---
 
 # Bibliografía
